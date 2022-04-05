@@ -1,0 +1,6 @@
+name: living-framework
+version: 1.0.0
+main: net.livingsky.framework.LivingFramework
+api-version: 1.17
+load: STARTUP
+description: The living framework.
