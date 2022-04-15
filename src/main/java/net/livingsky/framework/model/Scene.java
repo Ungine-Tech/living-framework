@@ -1,50 +1,35 @@
 package net.livingsky.framework.model;
 
-import java.util.ArrayList;
-import java.util.ListIterator;
-import java.util.concurrent.TimeUnit;
-
 /**
  * @author mikoto
  * @date 2022/4/4 20:52
  */
 public class Scene {
-    private final TimeUnit timeUnit;
+    private final Frame basicFrame;
+    private final String sceneName;
     private final int continueTime;
     private final boolean loop;
-    private final ArrayList<Frame> frames = new ArrayList<>();
 
-    public Scene(boolean loop, int continueTime, TimeUnit timeUnit) {
+    public Scene(boolean loop, int continueTime, String sceneName, Frame basicFrame) {
         this.loop = loop;
         this.continueTime = continueTime;
-        this.timeUnit = timeUnit;
+        this.sceneName = sceneName;
+        this.basicFrame = basicFrame;
     }
 
     public boolean isLoop() {
         return loop;
     }
 
-    public TimeUnit getTimeUnit() {
-        return timeUnit;
-    }
-
     public int getContinueTime() {
         return continueTime;
     }
 
-    public void setFrame(int framePosition, Frame frame) {
-        frames.add(framePosition, frame);
+    public String getSceneName() {
+        return sceneName;
     }
 
-    public void setFrame(Frame frame) {
-        frames.add(frame.getFramePosition(), frame);
-    }
-
-    public Frame getFrame(int framePosition) {
-        return frames.get(framePosition);
-    }
-
-    public ListIterator<Frame> getFrameIterator() {
-        return frames.listIterator();
+    public Frame getBasicFrame() {
+        return basicFrame;
     }
 }

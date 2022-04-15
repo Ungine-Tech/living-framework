@@ -1,14 +1,24 @@
 package net.livingsky.framework.applet;
 
-import org.bukkit.event.Event;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerEvent;
 
 /**
  * @author mikoto
- * @date 2022/4/5 0:03
+ * @date 2022/4/15 18:14
  */
-public record AppletRequest(Event event) {
+public interface AppletRequest {
+    /**
+     * Get a player.
+     *
+     * @return A Player.
+     */
+    Player getPlayer();
 
-    public Event getEvent() {
-        return event;
-    }
+    /**
+     * Get a player event.
+     *
+     * @return A PlayerEvent.
+     */
+    PlayerEvent getPlayerEvent();
 }

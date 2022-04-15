@@ -1,7 +1,7 @@
 package net.livingsky.framework.annotation;
 
-import org.bukkit.event.Event;
 import org.bukkit.event.EventPriority;
+import org.bukkit.event.player.PlayerEvent;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -17,9 +17,7 @@ import java.lang.annotation.Target;
 public @interface Applet {
     String value();
 
-    String plotterName();
-
-    Class<? extends Event> event();
+    Class<? extends PlayerEvent> event();
 
     EventPriority eventPriority() default EventPriority.NORMAL;
 }

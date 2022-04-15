@@ -1,40 +1,25 @@
 package net.livingsky.framework.model.scoreboard;
 
+import net.kyori.adventure.text.Component;
 import net.livingsky.framework.model.Frame;
-
-import java.util.ArrayList;
-import java.util.ListIterator;
 
 /**
  * @author mikoto
  * @date 2022/4/4 21:11
  */
 public class ScoreboardFrame extends Frame {
-    private static final ArrayList<ScoreboardDatum> scoreboardData = new ArrayList<>();
-    private String title;
+    private Component title;
 
-    public ScoreboardFrame(int framePosition, String title) {
+    public ScoreboardFrame(int framePosition, Component title) {
         super(framePosition);
         this.title = title;
     }
 
-    public String getTitle() {
+    public Component getTitle() {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(Component title) {
         this.title = title;
-    }
-
-    public void setScoreboardDatum(int scoreboardDatumPosition, ScoreboardDatum scoreboardDatum) {
-        scoreboardData.add(scoreboardDatumPosition, scoreboardDatum);
-    }
-
-    public void setScoreboardDatum(ScoreboardDatum scoreboardDatum) {
-        scoreboardData.add(scoreboardDatum);
-    }
-
-    public ListIterator<ScoreboardDatum> getScoreboardDataIterator() {
-        return scoreboardData.listIterator();
     }
 }

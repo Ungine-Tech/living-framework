@@ -13,6 +13,8 @@ public interface Applet extends Listener {
      *
      * @param appletRequest  The applet request.
      * @param appletResponse The applet response.
+     * @return Applet response.
+     * @throws Exception An exception.
      */
-    void appletHandle(AppletRequest appletRequest, AppletResponse appletResponse);
+    AppletResponse appletHandle(AppletRequest appletRequest, AppletResponse appletResponse) throws Exception;
 }

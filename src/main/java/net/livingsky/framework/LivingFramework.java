@@ -9,5 +9,6 @@ import net.livingsky.framework.plugin.LivingJavaPlugin;
 public class LivingFramework extends LivingJavaPlugin {
     @Override
     public void onEnable() {
+
     }
 }
