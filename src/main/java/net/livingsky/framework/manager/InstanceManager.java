@@ -1,6 +1,7 @@
 package net.livingsky.framework.manager;
 
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -21,8 +22,12 @@ public interface InstanceManager<T> {
      *
      * @param instanceName  The name of this instance.
      * @param instanceClass The instance class.
+     * @throws NoSuchMethodException     An exception.
+     * @throws InvocationTargetException An exception.
+     * @throws InstantiationException    An exception.
+     * @throws IllegalAccessException    An exception.
      */
-    void createInstance(String instanceName, Class<?> instanceClass);
+    void createInstance(String instanceName, Class<?> instanceClass) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException;
 
     /**
      * Get the instances by instance name.
@@ -30,7 +35,7 @@ public interface InstanceManager<T> {
      * @param instanceName The name of this instance.
      * @return Instances.
      */
-    Map<Class<?>, T> getInstances(String instanceName);
+    Map<Class<?>, Object> getInstances(String instanceName);
 
     /**
      * Get the instance by class.
@@ -38,5 +43,5 @@ public interface InstanceManager<T> {
      * @param interfaceClass The class.
      * @return Instances.
      */
-    Map<String, T> getInstances(Class<?> interfaceClass);
+    Map<String, Object> getInstances(Class<?> interfaceClass);
 }

@@ -1,7 +1,8 @@
-package net.livingsky.framework.scanner;
+package net.livingsky.framework.scanner.impl;
 
 import net.livingsky.framework.annotation.Service;
-import net.livingsky.framework.manager.ServiceManager;
+import net.livingsky.framework.manager.ClassManager;
+import net.livingsky.framework.scanner.Scanner;
 
 import java.lang.annotation.Annotation;
 import java.util.Set;
@@ -13,19 +14,15 @@ import static net.livingsky.framework.util.ClassUtil.getClasses;
  * @author mikoto
  * @date 2022/5/6 5:33
  */
-public class ServiceScanner extends Scanner {
-    public ServiceScanner(String packagePath) {
-        super(packagePath);
-    }
-
+public class ServiceScannerImpl implements Scanner {
     /**
      * Scan the class in the package.
      *
      * @param targetPackagePath The package path.
-     * @param serviceManager    The instance manager.
+     * @param classManager      The instance manager.
      */
     @Override
-    public void doScan(String targetPackagePath, ServiceManager serviceManager) {
+    public void doScan(String targetPackagePath, ClassManager classManager) {
         Set<Class<?>> classes = getClasses(targetPackagePath);
         for (Class<?> clazz :
                 classes) {
@@ -33,7 +30,7 @@ public class ServiceScanner extends Scanner {
             for (Annotation annotation :
                     annotations) {
                 if (annotation instanceof Service) {
-                    serviceManager.saveServiceClass(((Service) annotation).value(), clazz);
+                    classManager.saveClass(((Service) annotation).priority(), ((Service) annotation).value(), clazz);
                 }
             }
         }

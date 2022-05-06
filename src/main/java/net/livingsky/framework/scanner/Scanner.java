@@ -1,23 +1,17 @@
 package net.livingsky.framework.scanner;
 
-import net.livingsky.framework.manager.ServiceManager;
+import net.livingsky.framework.manager.ClassManager;
 
 /**
  * @author mikoto
- * @date 2022/5/6 5:42
+ * @date 2022/5/6 22:17
  */
-public abstract class Scanner {
-    protected final String packagePath;
-
-    public Scanner(String packagePath) {
-        this.packagePath = packagePath;
-    }
-
+public interface Scanner {
     /**
      * Scan the class in the package.
      *
      * @param targetPackagePath The package path.
-     * @param serviceManager    The instance manager.
+     * @param classManager      The instance manager.
      */
-    public abstract void doScan(String targetPackagePath, ServiceManager serviceManager);
+    void doScan(String targetPackagePath, ClassManager classManager);
 }

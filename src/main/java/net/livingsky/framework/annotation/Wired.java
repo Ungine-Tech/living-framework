@@ -15,4 +15,6 @@ public @interface Wired {
     String value() default "";
 
     boolean nullable() default true;
+
+    First first() default First.CLASS;
 }

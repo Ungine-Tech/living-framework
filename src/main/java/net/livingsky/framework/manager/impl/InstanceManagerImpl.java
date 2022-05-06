@@ -2,18 +2,24 @@ package net.livingsky.framework.manager.impl;
 
 import com.google.common.collect.HashBasedTable;
 import com.google.common.collect.Table;
+import net.livingsky.framework.annotation.Wired;
 import net.livingsky.framework.manager.InstanceManager;
 import org.jetbrains.annotations.NotNull;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+
+import static net.livingsky.framework.annotation.First.CLASS;
 
 /**
  * @author mikoto
  * @date 2022/5/6 18:33
  */
-public class InstanceManagerImpl<T> implements InstanceManager<T> {
-    private final Table<Class<?>, String, T> TABLE = HashBasedTable.create();
+public class InstanceManagerImpl implements InstanceManager<Object> {
+    private final Table<Class<?>, String, Object> TABLE = HashBasedTable.create();
 
     /**
      * Save a instance.
@@ -22,7 +28,7 @@ public class InstanceManagerImpl<T> implements InstanceManager<T> {
      * @param instance     The instance.
      */
     @Override
-    public void saveInstance(String instanceName, @NotNull T instance) {
+    public void saveInstance(String instanceName, @NotNull Object instance) {
         if (instanceName == null) {
             instanceName = "";
         }
@@ -40,13 +46,53 @@ public class InstanceManagerImpl<T> implements InstanceManager<T> {
      * @param instanceClass The instance class.
      */
     @Override
-    public void createInstance(String instanceName, Class<?> instanceClass) {
+    public void createInstance(String instanceName, Class<?> instanceClass) throws InvocationTargetException, InstantiationException, IllegalAccessException {
         if (instanceName == null) {
             instanceName = "";
         }
 
-        Constructor<?> constructor = instanceClass.getConstructors()[0];
+        ConcurrentHashMap<Class<?>, Object> wiredInstanceMap = new ConcurrentHashMap<>(16);
 
+        // Scan field and get wired instance.
+        for (Field field :
+                instanceClass.getDeclaredFields()) {
+            for (Wired annotation :
+                    field.getAnnotationsByType(Wired.class)) {
+                Object instance;
+
+                if (annotation.first().equals(CLASS)) {
+                    Map<String, Object> instances = getInstances(field.getType());
+                    instance = instances.get(annotation.value());
+                } else {
+                    Map<Class<?>, Object> instances = getInstances(annotation.value());
+                    instance = instances.get(field.getType());
+                }
+
+                if (!annotation.nullable() && instance == null) {
+                    throw new NullPointerException();
+                }
+
+                wiredInstanceMap.put(field.getType(), instance);
+            }
+        }
+
+        // Scan constructor and new instance.
+        for (Constructor<?> constructor :
+                instanceClass.getConstructors()) {
+            boolean flag = true;
+            for (Class<?> clazz :
+                    constructor.getParameterTypes()) {
+                if (!wiredInstanceMap.containsKey(clazz)) {
+                    flag = false;
+                    break;
+                }
+            }
+
+            if (flag) {
+                saveInstance(instanceName, constructor.newInstance(wiredInstanceMap.values().toArray()));
+                break;
+            }
+        }
     }
 
     /**
@@ -56,7 +102,7 @@ public class InstanceManagerImpl<T> implements InstanceManager<T> {
      * @return Instances.
      */
     @Override
-    public Map<Class<?>, T> getInstances(String instanceName) {
+    public Map<Class<?>, Object> getInstances(String instanceName) {
         return TABLE.column(instanceName);
     }
 
@@ -67,7 +113,7 @@ public class InstanceManagerImpl<T> implements InstanceManager<T> {
      * @return Instances.
      */
     @Override
-    public Map<String, T> getInstances(Class<?> interfaceClass) {
+    public Map<String, Object> getInstances(Class<?> interfaceClass) {
         return TABLE.row(interfaceClass);
     }
 }
