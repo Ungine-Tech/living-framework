@@ -1,7 +1,10 @@
 package net.livingsky.framework.manager.impl;
 
+import com.google.common.collect.HashBasedTable;
+import com.google.common.collect.Table;
 import net.livingsky.framework.manager.ClassManager;
 
+import java.util.Arrays;
 import java.util.Map;
 
 /**
@@ -9,6 +12,8 @@ import java.util.Map;
  * @date 2022/5/6 22:37
  */
 public class ClassManagerImpl implements ClassManager {
+    private final Table<Integer, String, Class<?>> TABLE = HashBasedTable.create();
+
     /**
      * Save the class.
      *
@@ -18,7 +23,7 @@ public class ClassManagerImpl implements ClassManager {
      */
     @Override
     public void saveClass(int priority, String className, Class<?> clazz) {
-
+        TABLE.put(priority, className, clazz);
     }
 
     /**
@@ -27,7 +32,24 @@ public class ClassManagerImpl implements ClassManager {
      * @return The class.
      */
     @Override
-    public Map.Entry<String, Class<?>> getNearestClass() {
-        return null;
+    public Map<String, Class<?>> getNearestClasses() {
+        Integer[] integers = TABLE.rowKeySet().toArray(new Integer[0]);
+        Arrays.sort(integers);
+        Map<String, Class<?>> classMap = TABLE.row(integers[0]);
+        for (Map.Entry<String, Class<?>> mapEntry :
+                classMap.entrySet()) {
+            TABLE.remove(integers[0], mapEntry.getKey());
+        }
+        return classMap;
+    }
+
+    /**
+     * Test if the table is null.
+     *
+     * @return A boolean.
+     */
+    @Override
+    public boolean isEmpty() {
+        return TABLE.isEmpty();
     }
 }

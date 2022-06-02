@@ -7,10 +7,10 @@ import java.lang.annotation.Target;
 
 /**
  * @author mikoto
- * @date 2022/5/6 5:49
+ * @date 2022/5/7 2:24
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface LivingPlugin {
-    String value();
+public @interface AutoScan {
+    Class<?> scannerClass();
 }

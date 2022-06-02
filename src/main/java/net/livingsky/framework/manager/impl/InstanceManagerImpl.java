@@ -116,4 +116,16 @@ public class InstanceManagerImpl implements InstanceManager<Object> {
     public Map<String, Object> getInstances(Class<?> interfaceClass) {
         return TABLE.row(interfaceClass);
     }
+
+    /**
+     * Get an instance.
+     *
+     * @param interfaceClass The class of this interface.
+     * @param instanceName   The name of this instance.
+     * @return The instance
+     */
+    @Override
+    public Object getInstance(Class<?> interfaceClass, String instanceName) {
+        return TABLE.get(interfaceClass, instanceName);
+    }
 }

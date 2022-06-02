@@ -13,4 +13,9 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Plotter {
     String value() default "";
+
+    /**
+     * @return The smaller the number, the higher the priority.
+     */
+    int priority() default 50;
 }

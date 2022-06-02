@@ -44,4 +44,13 @@ public interface InstanceManager<T> {
      * @return Instances.
      */
     Map<String, Object> getInstances(Class<?> interfaceClass);
+
+    /**
+     * Get an instance.
+     *
+     * @param interfaceClass The class of this interface.
+     * @param instanceName   The name of this instance.
+     * @return The instance
+     */
+    Object getInstance(Class<?> interfaceClass, String instanceName);
 }

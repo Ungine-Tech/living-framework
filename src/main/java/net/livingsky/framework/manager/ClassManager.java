@@ -21,5 +21,12 @@ public interface ClassManager {
      *
      * @return The class.
      */
-    Map.Entry<String, Class<?>> getNearestClass();
+    Map<String, Class<?>> getNearestClasses();
+
+    /**
+     * Test if the table is null.
+     *
+     * @return A boolean.
+     */
+    boolean isEmpty();
 }
