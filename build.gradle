@@ -23,7 +23,6 @@ publishing {
             pom {
                 name = "living-framework"
                 description = "Living sky framework"
-                url = "https://www.mikoto.net.cn"
                 licenses {
                     license {
                         name = "The Apache License, Version 2.0"
@@ -33,7 +32,6 @@ publishing {
                 developers {
                     developer {
                         id = "mikoto"
-                        name = "Zhang keshun"
                         email = "mikoto@ungine.cn"
                     }
                 }
@@ -43,6 +41,7 @@ publishing {
 }
 
 dependencies {
+    compileOnly 'net.livingsky.framework:living-framework-scanner:1.0.0'
     implementation 'com.google.guava:guava:31.1-jre'
     compileOnly 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'
     testImplementation 'io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT'

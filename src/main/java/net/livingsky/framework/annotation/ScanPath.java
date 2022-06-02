@@ -5,7 +5,5 @@ package net.livingsky.framework.annotation;
  * @date 2022/5/7 2:25
  */
 public @interface ScanPath {
-    Class<?> scannerClass();
-
     String value();
 }
