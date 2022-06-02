@@ -7,11 +7,11 @@ import java.lang.annotation.Target;
 
 /**
  * @author mikoto
- * @date 2022/6/3 0:58
+ * @date 2022/5/6 5:36
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Service {
+public @interface Component {
     String value() default "";
 
     /**

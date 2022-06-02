@@ -8,14 +8,14 @@ import java.util.Map;
  * @author mikoto
  * @date 2022/5/6 18:18
  */
-public interface InstanceManager<T> {
+public interface InstanceManager {
     /**
      * Save a instance.
      *
      * @param instanceName The name of this instance.
      * @param instance     The instance.
      */
-    void saveInstance(String instanceName, T instance);
+    void saveInstance(String instanceName, Object instance);
 
     /**
      * Create a new instance.

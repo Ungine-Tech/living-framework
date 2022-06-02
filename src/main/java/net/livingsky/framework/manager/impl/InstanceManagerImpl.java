@@ -18,7 +18,7 @@ import static net.livingsky.framework.annotation.First.CLASS;
  * @author mikoto
  * @date 2022/5/6 18:33
  */
-public class InstanceManagerImpl implements InstanceManager<Object> {
+public class InstanceManagerImpl implements InstanceManager {
     private final Table<Class<?>, String, Object> TABLE = HashBasedTable.create();
 
     /**
