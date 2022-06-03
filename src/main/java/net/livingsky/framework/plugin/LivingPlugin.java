@@ -4,13 +4,14 @@ import net.livingsky.framework.manager.ClassManager;
 import net.livingsky.framework.manager.InstanceManager;
 import net.livingsky.framework.scanner.Scanner;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * @author mikoto
  * @date 2022/6/3 2:31
  */
 public abstract class LivingPlugin extends JavaPlugin {
+    private Scanner scanner = null;
+
     public ClassManager getClassManager() {
         return Living.CLASS_MANAGER;
     }
@@ -19,7 +20,11 @@ public abstract class LivingPlugin extends JavaPlugin {
         return Living.INSTANCE_MANAGER;
     }
 
-    public void scanPackage(@NotNull Scanner scanner, String packageName) {
-        scanner.doScan(packageName, Living.CLASS_MANAGER);
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
     }
 }

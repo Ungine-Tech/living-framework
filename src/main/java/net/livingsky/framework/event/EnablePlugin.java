@@ -1,8 +1,8 @@
 package net.livingsky.framework.event;
 
 import net.livingsky.framework.annotation.AutoScan;
+import net.livingsky.framework.plugin.Living;
 import net.livingsky.framework.plugin.LivingPlugin;
-import net.livingsky.framework.scanner.impl.ServiceScanner;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.server.PluginEnableEvent;
@@ -20,7 +20,9 @@ public class EnablePlugin implements Listener {
 
         if (plugin instanceof LivingPlugin) {
             if (plugin.getClass().isAnnotationPresent(AutoScan.class)) {
-                ((LivingPlugin) plugin).scanPackage(new ServiceScanner(plugin), plugin.getClass().getPackageName());
+                if (((LivingPlugin) plugin).getScanner() != null) {
+                    ((LivingPlugin) plugin).getScanner().doScan(plugin.getClass().getPackageName(), Living.CLASS_MANAGER);
+                }
             }
         }
     }

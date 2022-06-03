@@ -35,7 +35,7 @@ public class ClassManagerImpl implements ClassManager {
     public Map<String, Class<?>> getNearestClasses() {
         Integer[] integers = TABLE.rowKeySet().toArray(new Integer[0]);
         Arrays.sort(integers);
-        Map<String, Class<?>> classMap = TABLE.row(integers[0]);
+        Map<String, Class<?>> classMap = Map.copyOf(TABLE.row(integers[0]));
         for (Map.Entry<String, Class<?>> mapEntry :
                 classMap.entrySet()) {
             TABLE.remove(integers[0], mapEntry.getKey());
